@@ -9,11 +9,7 @@ import {
   getTodayDateStringLA,
   normalizeRoundTimestamps,
 } from './lib/roundSchedule'
-import {
-  getChallengeLabel,
-  getRoundPhase,
-  getStatusPayload,
-} from './lib/statusLine'
+import { getChallengeLabel, getRoundPhase, getStatusPayload } from './lib/statusLine'
 
 /**
  * Get the prompt that should drive the UI right now, plus backend-computed status.
@@ -31,11 +27,7 @@ export const getActive = query({
 
     const normalized = recentPrompts.map((prompt) => ({
       prompt,
-      ...normalizeRoundTimestamps(
-        prompt.postWindowStart,
-        prompt.postWindowEnd,
-        prompt.revealTime,
-      ),
+      ...normalizeRoundTimestamps(prompt.postWindowStart, prompt.postWindowEnd, prompt.revealTime),
     }))
 
     const inPostingWindow = normalized.find(

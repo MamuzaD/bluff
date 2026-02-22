@@ -41,7 +41,6 @@ function FeedRouteComponent() {
   const { handleVote, handleReaction } = usePostInteractions()
 
   const sectionRefs = useRef<Map<number, HTMLElement>>(new Map())
-  const promptRef = useRef<HTMLDivElement | null>(null)
   const intersectingIndicesRef = useRef<Set<number>>(new Set())
   const [intersectingIndices, setIntersectingIndices] = useState<Set<number>>(new Set())
 
@@ -100,29 +99,27 @@ function FeedRouteComponent() {
 
   return (
     <div className="space-y-4 p-4">
-      <div ref={promptRef}>
-        <TodayPrompt
-          prompt={
-            isLoading && promptDoc == null
-              ? 'Loading…'
-              : (promptDoc?.prompt ?? 'No active challenge right now.')
-          }
-          statusLine={active != null ? statusLine : undefined}
-          challengeLabel={active?.challengeLabel}
-          floatingHeaderOverride={floatingHeaderOverride}
-          action={
-            promptDoc != null && active?.statusKind === 'posting_begun' ? (
-              <CreatePostModal
-                prompt={promptDoc}
-                isSignedIn={currentUser != null}
-                hasPostedForPrompt={myPostForPrompt != null}
-                compact
-              />
-            ) : undefined
-          }
-        />
-      </div>
-      <FeedScopeTabs scope={feedScope} onScopeChange={setFeedScope} stickyTargetRef={promptRef} />
+      <TodayPrompt
+        prompt={
+          isLoading && promptDoc == null
+            ? 'Loading…'
+            : (promptDoc?.prompt ?? 'No active challenge right now.')
+        }
+        statusLine={active != null ? statusLine : undefined}
+        challengeLabel={active?.challengeLabel}
+        floatingHeaderOverride={floatingHeaderOverride}
+        action={
+          promptDoc != null && active?.statusKind === 'posting_begun' ? (
+            <CreatePostModal
+              prompt={promptDoc}
+              isSignedIn={currentUser != null}
+              hasPostedForPrompt={myPostForPrompt != null}
+              compact
+            />
+          ) : undefined
+        }
+      />
+      <FeedScopeTabs scope={feedScope} onScopeChange={setFeedScope} />
 
       {isPostsLoading ? (
         <div className="space-y-4">

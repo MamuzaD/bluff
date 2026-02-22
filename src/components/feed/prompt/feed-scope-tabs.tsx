@@ -1,14 +1,10 @@
 import { Globe2, UsersRound } from 'lucide-react'
-import { motion } from 'motion/react'
-import type { RefObject } from 'react'
-import { useEffect, useState } from 'react'
 
 type FeedScope = 'global' | 'friends'
 
 interface FeedScopeTabsProps {
   scope: FeedScope
   onScopeChange: (scope: FeedScope) => void
-  stickyTargetRef?: RefObject<HTMLElement | null>
 }
 
 function FeedScopeTabsPill({
@@ -45,49 +41,10 @@ function FeedScopeTabsPill({
   )
 }
 
-export function FeedScopeTabs({ scope, onScopeChange, stickyTargetRef }: FeedScopeTabsProps) {
-  const [isTargetVisible, setIsTargetVisible] = useState(true)
-
-  useEffect(() => {
-    const targetEl = stickyTargetRef?.current
-    if (!targetEl) return
-
-    if (typeof IntersectionObserver === 'undefined') {
-      const onScroll = () => {
-        const rect = targetEl.getBoundingClientRect()
-        setIsTargetVisible(rect.bottom > 128)
-      }
-      onScroll()
-      window.addEventListener('scroll', onScroll, { passive: true })
-      return () => window.removeEventListener('scroll', onScroll)
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsTargetVisible(entry.isIntersecting)
-      },
-      { rootMargin: '-128px 0px 0px 0px', threshold: 0 },
-    )
-    observer.observe(targetEl)
-    return () => observer.disconnect()
-  }, [stickyTargetRef])
-
+export function FeedScopeTabs({ scope, onScopeChange }: FeedScopeTabsProps) {
   return (
-    <>
-      {stickyTargetRef != null && !isTargetVisible ? (
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.22, ease: 'easeOut' }}
-          className="fixed inset-x-0 top-28 z-65 flex justify-center"
-        >
-          <FeedScopeTabsPill scope={scope} onScopeChange={onScopeChange} />
-        </motion.div>
-      ) : null}
-
-      <div className="flex justify-center">
-        <FeedScopeTabsPill scope={scope} onScopeChange={onScopeChange} />
-      </div>
-    </>
+    <div className="sticky top-25 z-65 flex justify-center">
+      <FeedScopeTabsPill scope={scope} onScopeChange={onScopeChange} />
+    </div>
   )
 }

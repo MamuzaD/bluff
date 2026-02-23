@@ -29,7 +29,10 @@ export default function Header() {
           text-4xl
           md:text-6xl font-semibold tracking-tigher"
         >
-          <Link to="/" className="select-none">
+          <Link
+            to="/"
+            className="select-none transition-[text-shadow] duration-300 ease-out hover:[text-shadow:0_0_8px_var(--primary)]"
+          >
             Bluff
           </Link>
         </h1>

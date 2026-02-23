@@ -11,6 +11,9 @@ import { timeAgo } from '@/lib/time'
 import { cn } from '@/lib/utils'
 
 export const Route = createFileRoute('/_app/history')({
+  head: () => ({
+    meta: [{ title: 'History - Bluff' }],
+  }),
   component: HistoryPage,
 })
 

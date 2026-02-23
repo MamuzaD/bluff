@@ -18,6 +18,8 @@ export const env = createEnv({
     VITE_APP_TITLE: z.string().min(1).optional(),
     VITE_CLERK_PUBLISHABLE_KEY: z.string().min(1),
     VITE_CONVEX_URL: z.string().url(),
+    /** Canonical site URL for Open Graph and sitemaps (e.g. https://bluff.example.com) */
+    VITE_SITE_URL: z.string().url().optional(),
   },
 
   /**

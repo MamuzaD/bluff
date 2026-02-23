@@ -16,6 +16,9 @@ import { TodayPrompt } from '@/components/feed/prompt/today-prompt'
 import { ChallengeSeparator } from '@/components/feed/separator/challenge-separator'
 
 export const Route = createFileRoute('/_app/feed')({
+  head: () => ({
+    meta: [{ title: 'Feed - Bluff' }],
+  }),
   component: FeedRouteComponent,
 })
 

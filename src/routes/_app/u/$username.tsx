@@ -24,6 +24,9 @@ import { usePostInteractions } from '@/hooks/use-post-interactions'
 import { useUser } from '@/hooks/use-user'
 
 export const Route = createFileRoute('/_app/u/$username')({
+  head: ({ params }) => ({
+    meta: [{ title: `@${params.username} - Bluff` }],
+  }),
   component: UserProfilePage,
 })
 

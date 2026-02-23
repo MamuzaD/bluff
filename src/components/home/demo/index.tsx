@@ -20,7 +20,7 @@ import type { Stage } from './types'
 const COMPLETED_PLAYS_BEFORE_LOCK = 3
 /** Logo visible ~1s after hero fade-in; hero has delay 0.2s so total from mount = 1200ms */
 const INITIAL_LOGO_DURATION_MS = 1200
-const LOCKED_LOGO_SRC = '/apple-touch-icon.png'
+const LOCKED_LOGO_SRC = '/favicon/apple-touch-icon.png'
 
 function useCurrentTime() {
   const fmt = () => {

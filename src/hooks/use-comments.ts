@@ -53,14 +53,17 @@ export function useComments(postId: Id<'posts'>, enabled: boolean) {
   const handleSubmit = () => {
     const trimmed = text.trim()
     if (!trimmed || currentUser == null) return
+    const isReply = replyToId != null
     addComment({ postId, text: trimmed, parentId: replyToId ?? undefined })
       .then(() => {
         setText('')
         setReplyToId(null)
-        scrollRef.current?.scrollTo({
-          top: scrollRef.current.scrollHeight,
-          behavior: 'smooth',
-        })
+        if (!isReply) {
+          scrollRef.current?.scrollTo({
+            top: scrollRef.current.scrollHeight,
+            behavior: 'smooth',
+          })
+        }
       })
       .catch(() => {})
   }

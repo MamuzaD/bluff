@@ -1,4 +1,4 @@
-import { Link, useRouterState } from '@tanstack/react-router'
+import { Link } from '@tanstack/react-router'
 import { motion, useReducedMotion } from 'motion/react'
 
 import { Button } from '@/components/ui/button'
@@ -11,8 +11,6 @@ import ClerkHeader from './user'
 export default function Header() {
   const { isSignedIn } = useAuth()
   const shouldReduceMotion = useReducedMotion()
-  const pathname = useRouterState({ select: (s) => s.location.pathname })
-  const isHome = pathname === '/'
 
   return (
     <motion.header

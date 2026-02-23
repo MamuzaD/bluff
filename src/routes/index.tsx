@@ -1,6 +1,7 @@
 import { useAuth } from '@clerk/clerk-react'
 import { createFileRoute } from '@tanstack/react-router'
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
+import { toast } from 'sonner'
 
 import { Hero } from '@/components/home/hero'
 
@@ -9,16 +10,18 @@ const Grain = lazy(() => import('@/components/bg/grain').then((m) => ({ default:
 export const Route = createFileRoute('/')({ component: IndexComponent })
 
 function IndexComponent() {
-  const { isLoaded } = useAuth()
+  const { isLoaded, isSignedIn } = useAuth()
   const year = new Date().getFullYear()
+
+  useEffect(() => {
+    if (isSignedIn) {
+      toast.info(`You're signed in, use the feed to explore`)
+    }
+  }, [isSignedIn])
 
   if (!isLoaded) {
     return null
   }
-
-  // if (isSignedIn) {
-  //   return <Navigate to="/" />
-  // }
 
   return (
     <>

@@ -427,29 +427,18 @@ export function CreatePostModal({
     </form>
   )
 
-  if (isMobile === undefined) {
-    return compact ? (
-      <CompactTrigger disabledReason={disabledReason} />
-    ) : (
-      <Button size="lg" className="w-full" disabled={disabledReason != null}>
-        {disabledReason ?? 'Create post'}
-      </Button>
-    )
-  }
-
-  if (isMobile) {
+  if (isMobile !== false) {
     return (
       <Drawer open={open} onOpenChange={handleOpenChange}>
-        <DrawerTrigger asChild disabled={disabledReason != null}>
-          {compact ? (
-            <CompactTrigger disabledReason={disabledReason} />
-          ) : (
-            <Button size="lg" className="w-full" disabled={disabledReason != null}>
-              {disabledReason ?? 'Create post'}
-            </Button>
-          )}
-        </DrawerTrigger>
-
+        {compact ? (
+          <DrawerTrigger disabled={disabledReason != null} className="bg-primary rounded-full p-2">
+            <CameraIcon className="size-4" />
+          </DrawerTrigger>
+        ) : (
+          <DrawerTrigger disabled={disabledReason != null}>
+            {disabledReason ?? 'Create post'}
+          </DrawerTrigger>
+        )}
         <DrawerContent>
           <DrawerHeader className="border-b border-border/60 px-6 pt-4 pb-3">
             <DrawerTitle>Post to today&apos;s challenge</DrawerTitle>
@@ -509,27 +498,5 @@ export function CreatePostModal({
         {formBody}
       </DialogContent>
     </Dialog>
-  )
-}
-
-function CompactTrigger({ disabledReason }: { disabledReason: string | null }) {
-  return (
-    <Tooltip>
-      <TooltipTrigger>
-        <span className="shrink-0 inline-flex">
-          <Button
-            size="icon"
-            variant={disabledReason != null ? 'ghost' : 'default'}
-            className="size-9 rounded-full pointer-events-auto"
-            disabled={disabledReason != null}
-          >
-            <CameraIcon className="size-4" />
-          </Button>
-        </span>
-      </TooltipTrigger>
-      {disabledReason != null && (
-        <TooltipContent side="bottom">{disabledReason}</TooltipContent>
-      )}
-    </Tooltip>
   )
 }

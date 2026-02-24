@@ -130,7 +130,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                     <ConvexAuthSync />
                     <Header />
                     {/* always have the same gap on sides */}
-                    <main className="relative pt-32 px-16 mx-auto max-w-screen-2xl">
+                    <main className="relative pt-32 px-6 md:px-16 mx-auto max-w-screen-2xl">
                       {children}
                     </main>
                     <Toaster />

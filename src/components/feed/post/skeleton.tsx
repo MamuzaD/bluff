@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 function PostSkeleton() {
   return (
-    <article className="w-full max-w-md overflow-hidden rounded-2xl bg-card ring-1 ring-border text-card-foreground">
+    <article className="w-full overflow-hidden rounded-2xl bg-card ring-1 ring-border text-card-foreground md:max-w-md">
       {/* Author row — matches Post */}
       <div className="flex items-center gap-2.5 px-4 pt-4 pb-3">
         <Skeleton className="size-9 shrink-0 rounded-full bg-muted" />

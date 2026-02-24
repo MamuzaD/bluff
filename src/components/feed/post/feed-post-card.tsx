@@ -2,8 +2,10 @@ import type { PostCardData } from '@/components/feed/post'
 import { Post } from '@/components/feed/post'
 import { CommentsPanel } from '@/components/feed/post/comment/comments-panel'
 import type { ReactionType } from '@/components/feed/post/reactions'
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer'
 import { api } from '@/convex/_generated/api'
 import type { Id } from '@/convex/_generated/dataModel'
+import { useIsMobile } from '@/hooks/use-is-mobile'
 import { useUser } from '@/hooks/use-user'
 import type { PublicPost } from '@/lib/post'
 import { timeAgo } from '@/lib/time'
@@ -20,6 +22,7 @@ type FeedPostCardProps = {
 
 export function FeedPostCard({ post, isVotingOpen, onVote, onReact }: FeedPostCardProps) {
   const { userId: currentUserId } = useUser()
+  const isMobile = useIsMobile()
   const [commentsOpen, setCommentsOpen] = useState(false)
   const author = useQuery(api.users.getById, { userId: post.authorId })
   const imageUrl = useQuery(api.files.getUrl, {
@@ -38,7 +41,7 @@ export function FeedPostCard({ post, isVotingOpen, onVote, onReact }: FeedPostCa
   if (author === undefined || imageUrl === undefined) {
     return (
       <div className="flex w-full justify-center">
-        <article className="h-96 w-md shrink-0 animate-pulse rounded-2xl bg-muted/50" />
+        <article className="h-96 w-full shrink-0 animate-pulse rounded-2xl bg-muted/50 md:w-md" />
       </div>
     )
   }
@@ -65,10 +68,8 @@ export function FeedPostCard({ post, isVotingOpen, onVote, onReact }: FeedPostCa
 
   return (
     <div className="flex w-full justify-center">
-      {/* relative so the comments panel can be inset-y-0 against the card */}
-      <div className="relative flex overflow-hidden rounded-2xl bg-card ring-1 ring-border transition-all duration-300">
-        {/* Post — sole driver of the card's height */}
-        <div className="w-md shrink-0">
+      <div className="relative flex flex-col overflow-hidden rounded-2xl bg-card ring-1 ring-border transition-all duration-300 md:flex-row w-full md:w-fit">
+        <div className="w-full shrink-0 md:w-md">
           <Post
             post={cardData}
             postId={post._id}
@@ -80,16 +81,19 @@ export function FeedPostCard({ post, isVotingOpen, onVote, onReact }: FeedPostCa
           />
         </div>
 
-        {/* Width-only placeholder: expands the card horizontally without affecting height */}
-        <div
-          className={cn('shrink-0 transition-all duration-300', commentsOpen ? 'w-72' : 'w-0')}
-        />
-
-        {/* Comments panel: absolutely constrained to the card's natural (post-driven) height */}
+        {/* Desktop: width placeholder expands the card horizontally */}
         <div
           className={cn(
-            'absolute inset-y-0 right-0 overflow-hidden transition-all duration-300',
-            commentsOpen ? 'w-72' : 'w-0',
+            'hidden shrink-0 transition-all duration-300 md:block',
+            commentsOpen ? 'md:w-72' : 'md:w-0',
+          )}
+        />
+
+        {/* Desktop: absolute panel alongside the post */}
+        <div
+          className={cn(
+            'hidden overflow-hidden transition-all duration-300 md:absolute md:inset-y-0 md:right-0 md:block',
+            commentsOpen ? 'md:w-72' : 'md:w-0',
           )}
         >
           <CommentsPanel
@@ -99,6 +103,25 @@ export function FeedPostCard({ post, isVotingOpen, onVote, onReact }: FeedPostCa
           />
         </div>
       </div>
+
+      {/* Mobile: Drawer for comments */}
+      {isMobile && (
+        <Drawer open={commentsOpen} onOpenChange={setCommentsOpen}>
+          <DrawerContent>
+            <DrawerHeader className="sr-only">
+              <DrawerTitle>Comments</DrawerTitle>
+            </DrawerHeader>
+            <div className="max-h-[80vh]">
+              <CommentsPanel
+                postId={post._id}
+                open={commentsOpen}
+                onClose={() => setCommentsOpen(false)}
+                isDrawer
+              />
+            </div>
+          </DrawerContent>
+        </Drawer>
+      )}
     </div>
   )
 }

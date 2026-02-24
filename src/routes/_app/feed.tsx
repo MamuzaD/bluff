@@ -24,7 +24,6 @@ export const Route = createFileRoute('/_app/feed')({
 
 function FeedRouteComponent() {
   const [feedScope, setFeedScope] = useState<'global' | 'friends'>('global')
-  const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false)
   const { user: currentUser } = useUser()
   const active = useQuery(api.prompts.getActive)
   const promptDoc = active?.prompt ?? null
@@ -112,7 +111,7 @@ function FeedRouteComponent() {
         statusLine={active != null ? statusLine : undefined}
         challengeLabel={active?.challengeLabel}
         floatingHeaderOverride={floatingHeaderOverride}
-        suspendSticky={isCreatePostModalOpen}
+        suspendSticky
         action={
           promptDoc != null && active?.statusKind === 'posting_begun' ? (
             <CreatePostModal
@@ -120,16 +119,11 @@ function FeedRouteComponent() {
               isSignedIn={currentUser != null}
               hasPostedForPrompt={myPostForPrompt != null}
               compact
-              onOpenChange={setIsCreatePostModalOpen}
             />
           ) : undefined
         }
       />
-      <FeedScopeTabs
-        scope={feedScope}
-        onScopeChange={setFeedScope}
-        suspendSticky={isCreatePostModalOpen}
-      />
+      <FeedScopeTabs scope={feedScope} onScopeChange={setFeedScope} suspendSticky />
 
       {isPostsLoading ? (
         <div className="space-y-4">

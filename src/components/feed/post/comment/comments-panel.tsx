@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { useRef } from 'react'
 
 import type { Id } from '@/convex/_generated/dataModel'
@@ -11,9 +12,10 @@ type CommentsPanelProps = {
   postId: Id<'posts'>
   open: boolean
   onClose?: () => void
+  isDrawer?: boolean
 }
 
-export function CommentsPanel({ postId, open, onClose }: CommentsPanelProps) {
+export function CommentsPanel({ postId, open, onClose, isDrawer }: CommentsPanelProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const {
     comments,
@@ -33,12 +35,17 @@ export function CommentsPanel({ postId, open, onClose }: CommentsPanelProps) {
   }
 
   return (
-    <div className="flex h-full min-h-0 w-72 shrink-0 flex-col border-l border-border">
+    <div
+      className={cn(
+        'flex h-full min-h-0 w-full shrink-0 flex-col',
+        isDrawer ? 'h-[60vh]' : 'border-t border-border md:w-72 md:border-t-0 md:border-l',
+      )}
+    >
       {/* Header */}
       <div className="shrink-0 border-b border-border px-4 py-3">
         <div className="flex items-center justify-between gap-2">
           <h3 className="text-sm font-semibold text-foreground">Comments</h3>
-          {onClose && (
+          {onClose && !isDrawer && (
             <Button
               variant="ghost"
               size="icon"

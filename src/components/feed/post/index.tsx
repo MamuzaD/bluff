@@ -121,7 +121,7 @@ function Post({
   const { resetSwipe } = swipeVote
 
   return (
-    <article className="w-full max-w-md text-card-foreground">
+    <article className="w-full text-card-foreground md:max-w-md">
       <PostAuthorRow
         authorHandle={post.authorHandle}
         authorAvatar={post.authorAvatar}

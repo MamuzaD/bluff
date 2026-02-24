@@ -5,6 +5,7 @@ type FeedScope = 'global' | 'friends'
 interface FeedScopeTabsProps {
   scope: FeedScope
   onScopeChange: (scope: FeedScope) => void
+  suspendSticky?: boolean
 }
 
 function FeedScopeTabsPill({
@@ -41,9 +42,13 @@ function FeedScopeTabsPill({
   )
 }
 
-export function FeedScopeTabs({ scope, onScopeChange }: FeedScopeTabsProps) {
+export function FeedScopeTabs({ scope, onScopeChange, suspendSticky = false }: FeedScopeTabsProps) {
   return (
-    <div className="sticky top-25 z-65 flex justify-center">
+    <div
+      className={
+        suspendSticky ? 'z-0 flex justify-center' : 'sticky top-25 z-65 flex justify-center'
+      }
+    >
       <FeedScopeTabsPill scope={scope} onScopeChange={onScopeChange} />
     </div>
   )

@@ -29,6 +29,7 @@ type CreatePostModalProps = {
   isSignedIn: boolean
   hasPostedForPrompt: boolean
   compact?: boolean
+  onOpenChange?: (isOpen: boolean) => void
 }
 
 const REQUEST_ID_PATTERN = /\[Request ID:\s*([^\]]+)\]/i
@@ -87,6 +88,7 @@ export function CreatePostModal({
   isSignedIn,
   hasPostedForPrompt,
   compact,
+  onOpenChange,
 }: CreatePostModalProps) {
   const { user: currentUser } = useUser()
   const queryClient = useQueryClient()
@@ -163,6 +165,7 @@ export function CreatePostModal({
         if (previous) URL.revokeObjectURL(previous)
         return null
       })
+      onOpenChange?.(false)
       setOpen(false)
       toast.success('Post created', {
         description: 'Your post is now live in the feed.',
@@ -216,15 +219,14 @@ export function CreatePostModal({
           : roundCycle !== 'posting'
             ? 'Posting has not opened yet.'
             : null
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (nextOpen && disabledReason != null) return
+    setOpen(nextOpen)
+    onOpenChange?.(nextOpen)
+  }
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(nextOpen) => {
-        if (nextOpen && disabledReason != null) return
-        setOpen(nextOpen)
-      }}
-    >
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       {compact ? (
         <Tooltip>
           <TooltipTrigger>

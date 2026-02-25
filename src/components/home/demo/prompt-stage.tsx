@@ -17,7 +17,7 @@ export function PromptStage({ photoIndex }: PromptStageProps) {
   return (
     <motion.div
       key="prompt"
-      className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-8 bg-zinc-950"
+      className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-8"
       initial={shouldReduceMotion ? { opacity: 0 } : fadeIn}
       animate={shouldReduceMotion ? { opacity: 1 } : visible}
       exit={shouldReduceMotion ? { opacity: 0 } : fadeOut}

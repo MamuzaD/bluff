@@ -90,7 +90,7 @@ export function BluffOrTruthStage({
   return (
     <motion.div
       key="bluffOrTruth"
-      className="absolute inset-0 flex flex-col bg-zinc-950"
+      className="absolute inset-0 flex flex-col"
       initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 18 }}
       animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
@@ -102,7 +102,7 @@ export function BluffOrTruthStage({
         {/* Swipeable post only — image, author, caption move; labels + buttons stay fixed */}
         <div
           {...swipeHandlers}
-          className="flex min-h-0 flex-1 flex-col overflow-x-hidden overflow-y-auto"
+          className="flex min-h-0 flex-1 flex-col overflow-hidden"
           style={{ touchAction: 'pan-y' }}
         >
           <motion.div

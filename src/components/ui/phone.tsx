@@ -1,6 +1,6 @@
 import type { HTMLAttributes, ReactNode } from 'react'
 
-const PHONE_WIDTH = 433
+const PHONE_WIDTH = 432
 const PHONE_HEIGHT = 882
 const SCREEN_X = 21.25
 const SCREEN_Y = 19.25

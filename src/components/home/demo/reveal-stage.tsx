@@ -25,7 +25,7 @@ export function RevealStage({ actualWasTruth, userVote, userCorrect }: RevealSta
   return (
     <motion.div
       key="reveal"
-      className="absolute inset-0 flex flex-col items-center justify-center gap-5 bg-zinc-950 px-8"
+      className="absolute inset-0 flex flex-col items-center justify-center gap-5 px-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

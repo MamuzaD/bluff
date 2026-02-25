@@ -117,7 +117,7 @@ export function HeroDemo() {
           <span className="text-[11px] font-semibold tabular-nums text-white">{time}</span>
           <BatteryIcon />
         </div>
-        <div className="relative min-h-0 flex-1 overflow-hidden bg-zinc-950 p-16">
+        <div className="relative min-h-0 flex-1 overflow-hidden bg-black p-10">
           {isLocked || !hasSplashEnded ? (
             <AnimatePresence>
               <motion.div

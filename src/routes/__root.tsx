@@ -33,7 +33,8 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   errorComponent: RootError,
   head: () => {
     const title = 'Bluff'
-    const description = 'Bluff. WIP.'
+    const description =
+      'A social photo game where friends decide whether every claim is the truth or a bluff.'
     const siteName = 'Bluff'
     const imagePath = '/opengraph/landing.jpg'
     const baseUrl = env.VITE_SITE_URL ? env.VITE_SITE_URL.replace(/\/$/, '') : ''
@@ -70,6 +71,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         { name: 'twitter:image:alt', content: `${siteName} — ${description}` },
       ],
       links: [
+        { rel: 'manifest', href: '/site.webmanifest' },
         // Favicons
         { rel: 'icon', href: '/favicon/favicon.ico', sizes: 'any' },
         { rel: 'icon', href: '/favicon/favicon-16x16.png', type: 'image/png', sizes: '16x16' },
